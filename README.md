@@ -1,1 +1,0 @@
-# Uzum-Market-project
