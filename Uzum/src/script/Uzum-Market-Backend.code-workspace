@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../backend/Uzum-Market-Backend"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "tovar"
+	}
+}
