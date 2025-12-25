@@ -16,14 +16,6 @@
 ### Главная страница (пример UI)
 ![E-commerce Homepage UI](https://i.pinimg.com/originals/ad/a4/ad/ada4ad13b2099bbd897f5445ac28c150.gif)
 
-### Корзина (UI пример)
-![Shopping Cart Page](https://images.pexels.com/photos/commerce-illustration)
-
-### Продукт / карточка товара
-![Product Page UI](https://pixabay.com/images/search/ecommerce%20cart/)
-
-_Заменить на свои реальные скриншоты из `/screenshots` по мере готовности._
-
 ---
 
 ## 📦 Стек технологий
@@ -47,5 +39,6 @@ git clone https://github.com/ofi-piko/Uzum-Market-project.git
 cd Uzum-Market-project
 npm install
 npm run dev
+
 
 
