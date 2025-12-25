@@ -46,6 +46,7 @@ _Если скриншотов нет — создай папку `/screenshots`
 
 ```bash
 git clone https://github.com/ofi-piko/Uzum-Market-project.git
-cd Uzum-Market-project
+cd .\Uzum\
 npm install
 npm run dev
+
