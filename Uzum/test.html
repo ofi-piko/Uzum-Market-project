@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .cart {
+        width: 300px;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5e5e5;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    .cart:hover {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart_container {
+        padding: 0;
+        position: relative;
+    }
+
+    .cartImg {
+        padding: 20px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ff0000;
+        background: #fff;
+    }
+
+    .cartImg>img {
+        border: 1px solid #e0e0e0;
+        height: 200px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .cartName {
+        padding: 0 16px;
+        margin-bottom: 12px;
+    }
+
+    .cartName h3 {
+        font-size: 14px;
+        line-height: 1.4;
+        color: #333;
+        font-weight: 500;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .cartMinusPrice {
+        padding: 0 16px;
+        font-size: 13px;
+        color: #999;
+        text-decoration: line-through;
+        font-weight: 400;
+        margin-bottom: 4px;
+    }
+
+    .cartPrice {
+        padding: 0 16px 16px;
+        font-size: 20px;
+        color: #333;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .cartCart {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        background-image: url(https://cdn-icons-png.flaticon.com/512/34/34568.png);
+        background-repeat: no-repeat;
+        background-size: 18px;
+        background-position: center;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        height: 32px;
+        width: 32px;
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .cartCart:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<body>
+    <div class="cart">
+        <div class="cart_container">
+            <div class="cartImg">
+                <img src="https://i.pinimg.com/1200x/87/ea/ac/87eaac4f32f29defe44bf3d8de752903.jpg" alt="">
+            </div>
+            <div class="cartName">
+                <h3>Cтиральный порошок Tide, Color Lenor Touch, автомат, 3 кг</h3>
+            </div>
+            <div class="cartMinusPrice">230 000 сум</div>
+            <div class="cartPrice">230 000 сум</div>
+            <div class="cartCart"></div>
+        </div>
+    </div>
+</body>
+
+</html>

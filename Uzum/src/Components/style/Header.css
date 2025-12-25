@@ -1,0 +1,96 @@
+
+#header {
+    width: 100%;
+    background-color: var(--background-color);
+}
+
+#header_content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header_left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+
+#header_logo img {
+    height: 40px;
+}
+
+.katalog-btn {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 14px;
+    background-color: var(--background-button-color);
+    color: var(--text-color);
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#screach_holder {
+    padding-left: 15px;
+    position: relative;
+    flex: 1;
+    height: 40px;
+}
+
+#screach_holder input {
+    width: 95%;
+    height: 100%;
+    padding: 0 36px 0 11px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#need-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#user-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#user-name {
+    font-size: 14px;
+    color: var(--real-text-color);
+}
+
+#saved a,
+#cart a {
+    text-decoration: none;
+    color: var(--real-text-color);
+    font-size: 14px;
+}
+
+#cart {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#cart-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: var(--background-2-color);
+    color: var(--real-2-text-color);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+}
