@@ -24,7 +24,6 @@
 ---
 
 ## 📦 Структура проекта (с путями)
-
 Uzum-Market-project/
 │
 ├── public/
@@ -58,6 +57,7 @@ Uzum-Market-project/
 ├── .env.example # Пример ENV-файла
 ├── package.json # Зависимости и скрипты
 └── README.md # Документация проекта
+
 
 ---
 
