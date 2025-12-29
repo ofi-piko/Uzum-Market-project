@@ -1,6 +1,6 @@
 import { products as localProducts } from './data.js';
 
-let allProducts = [...localProducts]; // Начинаем с локальных данных
+let allProducts = [...localProducts];
 
 function renderProducts(productsToRender = allProducts) {
     const recommendationGrid = document.getElementById("recommendationsGrid");
@@ -54,39 +54,4 @@ function renderProducts(productsToRender = allProducts) {
     }
 }
 
-// Инициализируем с локальными данными
 renderProducts();
-
-async function getAllProducts() {
-    try {
-        const res = await fetch(
-            `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/main/products`
-        );
-        
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        
-        const data = await res.json();
-        
-        // Обновляем продукты данными с сервера
-        if (data && Array.isArray(data)) {
-            allProducts = data;
-            renderProducts(allProducts); // Перерисовываем с новыми данными
-        }
-        
-        console.log('Products loaded from server:', data);
-        return data;
-        
-    } catch (error) {
-        console.error('Error loading products:', error);
-        // Можно оставить локальные данные, если сервер не доступен
-        console.log('Using local products data');
-        return localProducts;
-    }
-}
-
-// Загружаем данные с сервера при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    getAllProducts();
-});

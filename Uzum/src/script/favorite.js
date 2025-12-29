@@ -82,24 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         initDeleteButtons();
         initCartButtons();
-    } else {
-        likedEl.innerHTML = `
-      
-            <div class="not-full-cart">
-                <div class="cat-content">
-                    <div class="cat-img">
-                        <img src="./public/icons/img/hearts.png" alt="">
-                    </div>
-                    <div class="cat-text">
-                        <h2>Здесь сохраним ваши любимые товары</h2>
-                        <h5>Нажмите ♡ в товарах, которые обычно заказываете или хотите купить позже
-
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
     }
 });
 
@@ -134,18 +116,22 @@ function initDeleteButtons() {
             if (!productsContainer || productsContainer.children.length === 0) {
                 const likedEl = document.getElementById("liked");
                 likedEl.innerHTML = `
-          <div class="not-full-cart">
-            <div class="cat-content">
-              <div class="cat-img">
-                <img src="./public/icons/img/shopocat1.png" alt="Избранное пусто">
-              </div>
-              <div class="cat-text">
-                <h2>В избранном пока нет товаров</h2>
-                <h5>Добавляйте товары в избранное, нажимая на сердечко на карточке товара</h5>
-              </div>
+      
+            <div class="not-full-cart">
+                <div class="cat-content">
+                    <div class="cat-img">
+                        <img src="./public/icons/img/hearts.png" alt="">
+                    </div>
+                    <div class="cat-text">
+                        <h2>Здесь сохраним ваши любимые товары</h2>
+                        <h5>Нажмите ♡ в товарах, которые обычно заказываете или хотите купить позже
+
+                        </h5>
+                    </div>
+                </div>
             </div>
-          </div>
-        `;
+        </div>
+    `;
             } else {
                 const likedCountEl = document.querySelector('.liked-count');
                 if (likedCountEl) {

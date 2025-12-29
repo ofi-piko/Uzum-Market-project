@@ -6,13 +6,18 @@ import "../Components/script/swiper.js";
 
 import "../styles/main.css";
 import "../styles/cart.css";
+import "../styles/one-product.css";
 import "../styles/product.css";
+import "../styles/tovar.css";
 import "../styles/favorite.css";
 
 import "../Components/style/footer.css";
 import "../Components/style/swiper.css";
 
 import "../script/cart.js";
+import "../script/one-product.js";
+import "../script/tovar.js";
+import "../script/screach.js";
 import "../script/backend.js";
 import "../script/product.js";
 import "../script/favorite.js";

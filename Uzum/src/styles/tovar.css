@@ -1,0 +1,24 @@
+.product-menu {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 999;
+    transform: translateY(100%);
+    transition: .3s;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.product-menu.open {
+    transform: translateY(0);
+}
+
+.menu-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}

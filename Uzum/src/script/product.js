@@ -13,7 +13,6 @@ async function getAllProducts() {
         }
         
         const data = await res.json();
-        console.log('Полученные данные:', data);
         
         renderProducts(data);
     } catch (error) {
@@ -46,12 +45,6 @@ function renderProducts(products) {
         <div class="products-grid">
             ${productsArray.map(product => `
                 <div class="product-card">
-                    ${product.salePercentage ? `
-                        <div class="product-sale-badge">
-                            Скидка ${product.salePercentage}%
-                        </div>
-                    ` : ''}
-                    
                     <div class="product-image-container">
                         ${product.media && product.media.length > 0 ? `
                             <img src="${product.media[0]}" 
@@ -73,27 +66,20 @@ function renderProducts(products) {
                     
                     <div class="product-content">
                         <h3 class="product-title">
-                            ${product.isBlackFriday ? '<span class="black-friday-badge">Black Friday</span>' : ''}
                             ${escapeHTML(product.title || product.name || 'Без названия')}
                         </h3>
                         
                         <div class="product-price-container">
-                            <p class="product-price">
+                            <p id="product-price" class="product-price">
                                 ${product.price ? `
                                     ${product.salePercentage ? `
-                                        <span class="product-old-price">
+                                        <span  class="product-old-price">
                                             ${Math.round(product.price * 100 / (100 - product.salePercentage)).toLocaleString('ru-RU')} Сум
                                         </span>
                                     ` : ''}
                                     ${product.price.toLocaleString('uz-UZ')} Cум
                                 ` : 'Цена не указана'}
                             </p>
-                            
-                            ${product.salePercentage ? `
-                                <p class="product-discount">
-                                    Экономия ${Math.round((product.price * product.salePercentage / (100 - product.salePercentage))).toLocaleString('ru-RU')} ₽
-                                </p>
-                            ` : ''}
                         </div>
                         
                         <div class="product-card-footer">
