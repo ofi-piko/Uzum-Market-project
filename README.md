@@ -39,6 +39,14 @@ git clone https://github.com/ofi-piko/Uzum-Market-project.git
 cd Uzum-Market-project
 npm install
 npm run dev
+```
+## запуск backend
 
+Просто клонируешь и ставишь в консоль:
+
+```bash
+cd .\backend\Uzum-Market-Backend\
+npm install
+npm run start
 
 
