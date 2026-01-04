@@ -1,60 +1,51 @@
+// Добавляем обработчик клика на карточки
 document.addEventListener('click', (e) => {
     const card = e.target.closest('.product-card');
     if (!card) return;
-
+    
+    // Пропускаем клики по кнопкам
     if (e.target.closest('button')) return;
-
+    
+    // Получаем ID товара
     const productId = getProductIdFromCard(card);
     if (!productId) return;
-
-    openProductMenu(productId);
+    
+    // Открываем меню с товаром
+    openProductPage(productId);
 });
 
 function getProductIdFromCard(card) {
     const btn = card.querySelector('.product-cart-btn');
-    if (!btn) return null;
-
-    const match = btn.getAttribute('onclick')?.match(/\d+/);
-    return match ? match[0] : null;
+    return btn?.getAttribute('onclick')?.match(/\d+/)?.[0];
 }
 
-async function openProductMenu(productId) {
-    const menu = document.getElementById('product-menu');
-    menu.classList.add('open');
-    menu.innerHTML = '<div class="loading">Загрузка товара...</div>';
-
-    try {
-        const res = await fetch(
-            `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/main/products/${productId}`
-        );
-
-        if (!res.ok) throw new Error('Товар не найден');
-
-        const product = await res.json();
-        renderProductMenu(product);
-    } catch (e) {
-        menu.innerHTML = '<p>Ошибка загрузки товара</p>';
-    }
-}
-
-function renderProductMenu(product) {
-    const menu = document.getElementById('product-menu');
-
-    menu.innerHTML = `
-        <button class="menu-close" onclick="closeProductMenu()">×</button>
-
-        <img src="${product.media?.[0] || ''}" alt="">
-        <h2>${product.title || product.name}</h2>
-        <p>${product.description || 'Описание отсутствует'}</p>
-
-        <strong>${product.price?.toLocaleString('ru-RU')} сум</strong>
-
-        <button onclick="addToCart(${product.id})">
-            В корзину
-        </button>
+async function openProductPage(productId) {
+    // Создаем оверлей
+    const overlay = document.createElement('div');
+    overlay.className = 'product-overlay';
+    overlay.innerHTML = `
+        <div class="product-modal">
+            <button class="close-btn" onclick="this.closest('.product-overlay').remove()">×</button>
+            <div class="modal-content">Загрузка...</div>
+        </div>
     `;
-}
-
-function closeProductMenu() {
-    document.getElementById('product-menu').classList.remove('open');
+    
+    document.body.appendChild(overlay);
+    
+    // Загружаем данные
+    try {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/main/products/${productId}`);
+        const product = await res.json();
+        
+        const content = overlay.querySelector('.modal-content');
+        content.innerHTML = `
+            <img src="${product.media?.[0] || ''}" alt="${product.title || ''}">
+            <h2>${product.title || product.name}</h2>
+            <p>${product.price?.toLocaleString()} сум</p>
+            <button onclick="addToCart(${product.id})">В корзину</button>
+        `;
+    } catch (e) {
+        const content = overlay.querySelector('.modal-content');
+        content.innerHTML = '<p>Ошибка загрузки</p>';
+    }
 }

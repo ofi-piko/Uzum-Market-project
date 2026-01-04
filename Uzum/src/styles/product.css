@@ -34,7 +34,8 @@
 }
 
 .product-card {
-    border-radius: 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background: white;
     transition: all 0.3s ease;
@@ -42,7 +43,6 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border: 1px solid #f0f0f0;
 }
 
 .product-card:hover {
@@ -50,7 +50,6 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* Бейдж распродажи */
 .product-sale-badge {
     position: absolute;
     top: 15px;
@@ -84,40 +83,44 @@
     transform: scale(1.05);
 }
 
-/* Кнопка избранного */
 .product-wishlist-btn {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: white;
+
+    background: transparent;
     border: none;
     border-radius: 50%;
+
     width: 36px;
     height: 36px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 10;
-    transition: all 0.3s ease;
-}
 
-.product-wishlist-btn:hover {
-    background: #ff4757;
-    color: white;
-    transform: scale(1.1);
+    cursor: pointer;
+    z-index: 10;
+
+    transition: all 0.25s ease;
 }
 
 .product-wishlist-btn svg {
-    transition: all 0.3s ease;
+    stroke: black;
+    fill: transparent; 
+    transition: all 0.25s ease;
 }
 
-.product-wishlist-btn:hover svg {
-    stroke: white;
+.product-wishlist-btn:hover {
+    transform: scale(1.08);
 }
 
-/* Контент карточки */
+
+.product-wishlist-btn.active svg {
+    stroke: #8967F0;
+    fill: #8967F0;
+}
+
 .product-content {
     padding: 20px;
     flex-grow: 1;
@@ -135,10 +138,6 @@
     flex-grow: 1;
 }
 
-
-
-
-/* Замените существующий блок .product-price-container на этот: */
 .product-price-container {
     margin-bottom: 15px;
     flex-shrink: 0;
@@ -184,22 +183,18 @@
 }
 
 
-/* Футер карточки с кнопкой корзины */
 .product-card-footer {
     margin-top: auto;
-    padding-top: 15px;
     border-top: 1px solid #f0f0f0;
     display: flex;
     justify-content: flex-end;
 }
 
 .product-cart-btn {
-    border: 2px solid #000;
-    background: #ffffff;
+    border: none;
+    background: linear-gradient(55deg ,#7000ff, #4f00b7);
     color: rgb(0, 0, 0);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,10 +204,10 @@
 }
 
 .product-cart-btn:hover {
-    background: #000;
+    background: linear-gradient(55deg ,#8a66ff, #3c00ff);
     color: white;
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 .product-cart-btn svg {

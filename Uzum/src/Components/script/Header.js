@@ -38,6 +38,8 @@ header.innerHTML = `
 
     </div>
   </header>
+  <br>
+  <br>
 `;
 
 document.addEventListener('DOMContentLoaded', function () {
