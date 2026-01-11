@@ -50,29 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let debounceTimer;
 
-  async function searchOnBackend(query) {
-    if (!query.trim()) {
-      resultsContainer.style.display = 'none';
-      return;
-    }
-
-    try {
-      const response = await fetch(`https://ваш-бекенд.ru/api/search?q=${encodeURIComponent(query)}`);
-
-      if (!response.ok) {
-        throw new Error('Ошибка сети');
-      }
-
-      const data = await response.json();
-      displayResults(data);
-
-    } catch (error) {
-      console.error('Ошибка поиска:', error);
-      resultsContainer.innerHTML = '<div style="padding: 10px; color: red;">Ошибка соединения с сервером</div>';
-      resultsContainer.style.display = 'block';
-    }
-  }
-
   function displayResults(results) {
     if (!results || results.length === 0) {
       resultsContainer.innerHTML = '<div style="padding: 10px; color: #666;">Ничего не найдено</div>';
@@ -127,3 +104,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+fetch('https://dummyjson.com/user/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+  }),
+})
+.then(res => res.json())
+.then(console.log);

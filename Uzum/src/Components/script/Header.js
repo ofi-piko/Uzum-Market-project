@@ -1,14 +1,12 @@
 export const header = document.getElementById("header");
 
 header.innerHTML = `
-  <header id="header">
-    <div id="header_content">
-
+<div id="header_content">
       <div id="header_left">
         <div id="header_logo">
-            <a href="./index.html">
-                <img src="/public/icons/logo/logo.svg" alt="">
-            </a>
+          <a href="./index.html">
+            <img src="./public/icons/logo/logo.svg" alt="">
+          </a>
         </div>
         <br>
         <div id="katalog">
@@ -37,9 +35,8 @@ header.innerHTML = `
       </div>
 
     </div>
-  </header>
-  <br>
-  <br>
+    <br>
+    <br>
 `;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -57,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (isPhoneSearch && value.trim() !== '') {
       hintElement.style.display = 'block';
-      hintElement.textContent = 'Телефон';  
+      hintElement.textContent = 'Телефон';
     } else {
       hintElement.style.display = 'none';
     }

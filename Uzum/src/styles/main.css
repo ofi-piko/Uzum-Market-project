@@ -1,10 +1,5 @@
 @import url("./font.css");
 @import url("./start.css");
-@import url("../styles/main.css");
-@import url("../styles/cart.css");
-@import url("../styles/product.css");
-@import url("../Components/style/swiper.css");
-@import url("../Components/style/footer.css");
 
 
 :root {
@@ -168,21 +163,6 @@ body > :not(.uzum-footer) {
     transform: translateY(-2px);
 }
 
-.product-card {
-    position: relative;
-    background: white;
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    height: 100%;
-}
-
-.product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(255, 0, 0, 0.15);
-}
 
 .product-image-container {
     position: relative;
