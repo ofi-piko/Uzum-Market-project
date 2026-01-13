@@ -21,7 +21,7 @@ header.innerHTML = `
       <div id="need-content">
         <div id="user-content">
           <img src="./public/icons/logo/user.png" alt="">
-          <div id="user-name">ofi_piko</div>
+          <div id="user-name"><a href="UserProfile.html">ofi_piko</a></div>
         </div>
 
         <div id="saved">

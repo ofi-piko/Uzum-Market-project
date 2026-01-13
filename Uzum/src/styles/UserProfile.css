@@ -1,0 +1,64 @@
+#UserMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoZakaz ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background-color: #868686;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #555;
+    transform: translateX(5px);
+}
+
+
+
+/* профиль */
+
+
+
+.right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.userLogo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userName {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}

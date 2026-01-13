@@ -10,6 +10,7 @@ import "../styles/one-product.css";
 import "../styles/product.css";
 import "../styles/tovar.css";
 import "../styles/favorite.css";
+import "../styles/UserProfile.css";
 
 import "../Components/style/footer.css";
 import "../Components/style/swiper.css";
@@ -21,6 +22,7 @@ import "../script/screach.js";
 import "../script/backend.js";
 import "../script/product.js";
 import "../script/favorite.js";
+import "../script/UserProfile.js";
 
 const header = document.getElementById("header");
 const liked = document.getElementById("liked");

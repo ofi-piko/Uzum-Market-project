@@ -1,6 +1,7 @@
 export const footer = document.getElementById("footer")
 
-footer.innerHTML = `<footer class="uzum-footer" id="footer">
+footer.innerHTML = `
+<footer class="uzum-footer" id="footer">
   <div class="wrapper">
     <div class="footer-sections">
 
