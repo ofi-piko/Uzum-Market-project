@@ -96,7 +96,6 @@
 }
 
 
-/* Базовые стили header */
 #header_content {
   display: flex;
   justify-content: space-between;
@@ -216,7 +215,6 @@
   font-size: 12px;
 }
 
-/* Стили для состояния тикера */
 @media (max-width: 833px), (max-height: 894px) {
   #header_content {
     position: fixed;
@@ -235,7 +233,6 @@
     animation: ticker-scroll 20s linear infinite;
   }
 
-  /* Анимация тикера */
   @keyframes ticker-scroll {
     0% {
       transform: translateX(0);
@@ -313,13 +310,11 @@
     right: -6px;
   }
 
-  /* Добавляем отступ для основного контента, чтобы не перекрывался тикером */
   body {
     padding-bottom: 70px;
   }
 }
 
-/* Дополнительные адаптивные стили для очень маленьких экранов */
 @media (max-width: 480px) {
   #header_content {
     gap: 15px;
@@ -346,7 +341,7 @@
   }
 
   #user-name {
-    display: none; /* Скрываем имя на очень маленьких экранах */
+    display: none;
   }
 
   #saved a, #cart a {

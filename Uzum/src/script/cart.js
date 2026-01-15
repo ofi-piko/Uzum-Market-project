@@ -9,7 +9,6 @@ class CartManager {
         if (korzinaEl) this.renderCart(korzinaEl);
     }
 
-    /* ---------- STORAGE ---------- */
 
     getCartData() {
         return JSON.parse(localStorage.getItem(this.cartKey)) || {};
@@ -31,7 +30,6 @@ class CartManager {
         return data && Object.keys(data).length > 0;
     }
 
-    /* ---------- TOTAL ---------- */
 
     getTotalNumber(data) {
         return Object.values(data).reduce(
@@ -45,7 +43,6 @@ class CartManager {
         return this.getTotalNumber(data).toLocaleString('ru-RU') + ' сум';
     }
 
-    /* ---------- RENDER ---------- */
 
     renderCart(container) {
         const cartData = this.getCartData();
@@ -116,7 +113,6 @@ class CartManager {
         `;
     }
 
-    /* ---------- COUNTERS ---------- */
 
     initCounters() {
         document.querySelectorAll('.counter').forEach(counter => {
@@ -149,7 +145,6 @@ class CartManager {
             this.getTotalFormatted(cart);
     }
 
-    /* ---------- DELETE ---------- */
 
     initDeleteButtons() {
         document.querySelectorAll('.delete-btn').forEach(btn => {
@@ -163,7 +158,6 @@ class CartManager {
         });
     }
 
-    /* ---------- CHECKOUT ---------- */
 
     checkoutOrder() {
         const cart = this.getCartData();
@@ -173,7 +167,7 @@ class CartManager {
             id: Date.now(),
             date: new Date().toISOString(),
             items: cart,
-            total: this.getTotalNumber(cart), // ЧИСЛО!
+            total: this.getTotalNumber(cart),
             status: 'новый'
         };
 
@@ -194,7 +188,6 @@ class CartManager {
     }
 }
 
-/* ---------- INIT ---------- */
 
 let cartManager;
 document.addEventListener('DOMContentLoaded', () => {

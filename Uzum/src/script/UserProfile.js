@@ -269,24 +269,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!ordersList) return;
 
-    // Получаем заказы из localStorage
     const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
 
-    // Если заказов нет
     if (!Array.isArray(allOrders) || allOrders.length === 0) {
         ordersList.innerHTML = '<p>У вас пока нет заказов</p>';
         return;
     }
 
-    // Очищаем список
     ordersList.innerHTML = '';
 
-    // Перебираем заказы
     allOrders.forEach(order => {
         const orderCard = document.createElement('div');
         orderCard.className = 'order-card';
 
-        // Форматируем дату
         const orderDate = new Date(order.date);
         const formattedDate = orderDate.toLocaleDateString('ru-RU', {
             day: 'numeric',
@@ -294,7 +289,6 @@ document.addEventListener('DOMContentLoaded', function () {
             year: 'numeric'
         });
 
-        // Формируем список товаров
         let itemsHTML = '';
 
         Object.values(order.items || {}).forEach(item => {

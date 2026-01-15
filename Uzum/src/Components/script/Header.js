@@ -100,12 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Основной объект приложения
 const AuthApp = {
-    // Текущий пользователь
     currentUser: null,
     
-    // Инициализация приложения
     init() {
         this.loadUser();
         this.checkAuth();
@@ -113,7 +110,6 @@ const AuthApp = {
         this.setupEventListeners();
     },
     
-    // Загрузка пользователя из localStorage
     loadUser() {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
@@ -121,7 +117,6 @@ const AuthApp = {
         }
     },
     
-    // Проверка авторизации
     checkAuth() {
         const userContent = document.getElementById('user-content');
         
@@ -166,9 +161,7 @@ const AuthApp = {
         }
     },
     
-    // Создание меню авторизации
     createAuthMenu() {
-        // Создаем модальное окно
         const modal = document.createElement('div');
         modal.id = 'auth-modal';
         modal.className = 'auth-modal';
@@ -266,27 +259,22 @@ const AuthApp = {
         document.body.appendChild(modal);
     },
     
-    // Настройка обработчиков событий
     setupEventListeners() {
-        // Клик по ссылке авторизации
         document.addEventListener('click', (e) => {
             if (e.target.id === 'auth-link' || e.target.closest('#auth-link')) {
                 e.preventDefault();
                 this.openAuthModal();
             }
             
-            // Закрытие модального окна
             if (e.target.id === 'close-auth') {
                 this.closeAuthModal();
             }
             
-            // Закрытие по клику на фон
             if (e.target.id === 'auth-modal') {
                 this.closeAuthModal();
             }
         });
         
-        // Отправка формы
         const authForm = document.getElementById('auth-form');
         if (authForm) {
             authForm.addEventListener('submit', (e) => {
@@ -295,7 +283,6 @@ const AuthApp = {
             });
         }
         
-        // Обработка Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeAuthModal();
@@ -303,7 +290,6 @@ const AuthApp = {
         });
     },
     
-    // Открытие модального окна
     openAuthModal() {
         const modal = document.getElementById('auth-modal');
         if (modal) {
@@ -312,7 +298,6 @@ const AuthApp = {
         }
     },
     
-    // Закрытие модального окна
     closeAuthModal() {
         const modal = document.getElementById('auth-modal');
         if (modal) {
@@ -321,58 +306,45 @@ const AuthApp = {
         }
     },
     
-    // Регистрация пользователя
     registerUser() {
-        // Получаем данные из формы
         const firstName = document.getElementById('first-name').value.trim();
         const lastName = document.getElementById('last-name').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const password = document.getElementById('password').value;
         const gender = document.querySelector('input[name="gender"]:checked')?.value;
         
-        // Валидация
         if (!firstName || !lastName || !phone || !password || !gender) {
             alert('Пожалуйста, заполните все поля!');
             return;
         }
         
-        // Проверка формата телефона (простая)
         const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/;
         if (!phoneRegex.test(phone)) {
             alert('Введите корректный номер телефона!');
             return;
         }
         
-        // Проверка длины пароля
         if (password.length < 6) {
             alert('Пароль должен содержать минимум 6 символов!');
             return;
         }
         
-        // Сохраняем пользователя
         this.currentUser = {
             firstName,
             lastName,
             phone,
             gender,
-            login: phone, // Используем телефон как логин
+            login: phone,
             registeredAt: new Date().toISOString()
         };
         
-        // Сохраняем в localStorage
         localStorage.setItem('user', JSON.stringify(this.currentUser));
         
-        // Закрываем модальное окно
         this.closeAuthModal();
         
-        // Обновляем интерфейс
         this.checkAuth();
-        
-        // Показываем сообщение
-        alert(`Добро пожаловать, ${firstName}!`);
     },
     
-    // Выход из системы
     logout() {
         if (confirm('Вы уверены, что хотите выйти?')) {
             localStorage.removeItem('user');
@@ -381,7 +353,6 @@ const AuthApp = {
         }
     },
     
-    // Стили для интерфейса
     addStyles() {
         const style = document.createElement('style');
         style.textContent = `
@@ -399,7 +370,6 @@ const AuthApp = {
             .user-profile-link:hover {
                 background: rgba(17, 17, 17, 0.1);
             }
-            /* Стили для формы */
             #auth-form input:focus {
                 outline: none;
                 border-color: #4CAF50;
@@ -409,7 +379,6 @@ const AuthApp = {
                 background: #45a049;
             }
             
-            /* Анимация появления */
             @keyframes fadeIn {
                 from {
                     opacity: 0;
