@@ -1,16 +1,12 @@
-// Добавляем обработчик клика на карточки
 document.addEventListener('click', (e) => {
     const card = e.target.closest('.product-card');
     if (!card) return;
     
-    // Пропускаем клики по кнопкам
     if (e.target.closest('button')) return;
     
-    // Получаем ID товара
     const productId = getProductIdFromCard(card);
     if (!productId) return;
     
-    // Открываем меню с товаром
     openProductPage(productId);
 });
 
@@ -20,7 +16,6 @@ function getProductIdFromCard(card) {
 }
 
 async function openProductPage(productId) {
-    // Создаем оверлей
     const overlay = document.createElement('div');
     overlay.className = 'product-overlay';
     overlay.innerHTML = `
@@ -32,7 +27,6 @@ async function openProductPage(productId) {
     
     document.body.appendChild(overlay);
     
-    // Загружаем данные
     try {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/main/products/${productId}`);
         const product = await res.json();

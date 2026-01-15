@@ -99,72 +99,186 @@ function displayResults(results) {
     if (results.length === 0) {
         const noResults = document.createElement('div');
         noResults.className = 'search-no-results';
-        noResults.textContent = 'Товары не найдены';
-        noResults.style.cssText = 'padding: 15px; text-align: center; color: #999;';
-        resultsContainer.appendChild(noResults);
-        resultsContainer.style.display = 'block';
-        return;
-    }
-
-    const limitedResults = results.slice(0, 15);
-
-    limitedResults.forEach(product => {
-        const item = document.createElement('div');
-        item.className = 'search-result-item';
-        item.style.cssText = `
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background-color 0.2s;
+        noResults.style.cssText = `
+            padding: 40px 24px;
+            text-align: center;
+            color: #6C757D;
         `;
-
-        let categoryDisplay = product.category || '';
-        if (categoryDisplay.includes('.')) {
-            const parts = categoryDisplay.split('.').map(p => p.trim());
-            categoryDisplay = parts.join(' • ');
-        }
-
-        const shortDescription = truncateToFirstDot(product.description || product.name || '');
-
-        item.innerHTML = `
-            <div style="flex-shrink: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2">
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        noResults.innerHTML = `
+            <div style="margin-bottom: 16px;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" 
+                          stroke="#DEE2E6" 
+                          stroke-width="1.5"/>
                 </svg>
             </div>
-            <div style="flex: 1; min-width: 0;">
-                <div style="font-weight: 600; font-size: 14px; color: #333; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                    ${product.name || shortDescription}
-                </div>
-                ${categoryDisplay ? `<div style="font-size: 12px; color: #3498db; font-weight: 500; margin-bottom: 2px;">${categoryDisplay}</div>` : ''}
-                ${product.brand ? `<div style="font-size: 12px; color: #666; margin-bottom: 2px;">Бренд: ${product.brand}</div>` : ''}
-                ${product.price ? `<div style="color: #2ecc71; font-weight: bold; font-size: 14px;">${product.price.toLocaleString()} Сум</div>` : ''}
+            <div style="font-size: 16px; font-weight: 500; margin-bottom: 4px;">
+                Ничего не найдено
+            </div>
+            <div style="font-size: 14px;">
+                Попробуйте изменить запрос
             </div>
         `;
+        resultsContainer.appendChild(noResults);
+    } else {
+        const limitedResults = results.slice(0, 8);
 
-        item.addEventListener('click', () => {
-            const searchInput = document.querySelector('#screach_holder input[type="search"]');
-            searchInput.value = product.name || shortDescription;
-            resultsContainer.style.display = 'none';
+        limitedResults.forEach((product, index) => {
+            const item = document.createElement('div');
+            item.className = 'search-result-item';
+            item.style.cssText = `
+                padding: 16px 24px;
+                cursor: pointer;
+                border-bottom: ${index < limitedResults.length - 1 ? '1px solid #f1f3f5' : 'none'};
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                transition: all 0.15s ease;
+                background: white;
+            `;
+
+            let categoryDisplay = product.category || '';
+            if (categoryDisplay.includes('.')) {
+                const parts = categoryDisplay.split('.').map(p => p.trim());
+                categoryDisplay = parts.join(' › ');
+            }
+
+            const shortDescription = truncateToFirstDot(product.description || product.name || '');
+            const categoryIcon = getCategoryIcon(product);
+
+            item.innerHTML = `
+                <div style="flex-shrink: 0; width: 40px; height: 40px; 
+                            background: #f8f9fa;
+                            border-radius: 10px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 20px;">
+                    ${categoryIcon}
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                    <div style="font-size: 15px; 
+                                color: #212529; 
+                                margin-bottom: 4px;
+                                font-weight: 500;
+                                line-height: 1.4;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;">
+                        ${product.name || shortDescription}
+                    </div>
+                    ${categoryDisplay ? `
+                        <div style="font-size: 13px; 
+                                    color: #6C757D; 
+                                    margin-bottom: 4px;">
+                            ${categoryDisplay}
+                        </div>
+                    ` : ''}
+                    ${product.brand ? `
+                        <div style="font-size: 13px; 
+                                    color: #495057;">
+                            ${product.brand}
+                        </div>
+                    ` : ''}
+                    ${product.price ? `
+                        <div style="color: #212529; 
+                                    font-weight: 600; 
+                                    font-size: 16px;
+                                    margin-top: 8px;">
+                            ${product.price.toLocaleString()} сум
+                        </div>
+                    ` : ''}
+                </div>
+                <div style="flex-shrink: 0; color: #ADB5BD;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 5L16 12L9 19" 
+                              stroke="currentColor" 
+                              stroke-width="2"/>
+                    </svg>
+                </div>
+            `;
+
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('Выбранный товар:', product);
+                console.log('ID товара:', product.id || 'Нет ID');
+                console.log('Название:', product.name);
+                console.log('Категория:', product.category);
+                console.log('Бренд:', product.brand);
+                console.log('Цена:', product.price);
+                console.log('Описание:', product.description);
+                console.log('-------------------');
+                
+                const event = new CustomEvent('productSelected', {
+                    detail: { product }
+                });
+                document.dispatchEvent(event);
+                hideResults();
+            });
+
+            item.addEventListener('mouseenter', () => {
+                item.style.background = '#f8f9fa';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.style.background = 'white';
+            });
+
+            resultsContainer.appendChild(item);
         });
 
-        item.addEventListener('mouseenter', () => {
-            item.style.backgroundColor = '#f8f9fa';
-        });
+        if (results.length > limitedResults.length) {
+            const footer = document.createElement('div');
+            footer.style.cssText = `
+                padding: 16px 24px;
+                color: #7000FF;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: center;
+                cursor: pointer;
+                border-top: 1px solid #f1f3f5;
+                transition: all 0.15s ease;
+            `;
+            footer.innerHTML = `
+                Показать все результаты (${results.length})
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-left: 6px;">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" 
+                          stroke="currentColor" 
+                          stroke-width="2"/>
+                </svg>
+            `;
+            
+            footer.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Все результаты:', results);
+                
+                results.forEach((product, index) => {
+                    console.log(`${index + 1}. ${product.name} - ${product.price} сум`);
+                });
+            });
 
-        item.addEventListener('mouseleave', () => {
-            item.style.backgroundColor = '';
-        });
+            footer.addEventListener('mouseenter', () => {
+                footer.style.background = '#f8f9fa';
+            });
 
-        resultsContainer.appendChild(item);
-    });
+            footer.addEventListener('mouseleave', () => {
+                footer.style.background = 'white';
+            });
+
+            resultsContainer.appendChild(footer);
+        }
+    }
 
     resultsContainer.style.display = 'block';
+    setTimeout(() => {
+        resultsContainer.style.opacity = '1';
+        resultsContainer.style.transform = 'translateY(0)';
+    }, 10);
 }
-
 function hideResults() {
     const resultsContainer = document.getElementById('searchResults');
     if (resultsContainer) {
@@ -181,7 +295,6 @@ function initSearch() {
         width: 100%;
         max-width: 680px;
         margin: 0 auto;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     `;
 
     let searchInput = searchHolder.querySelector('input[type="search"]');
@@ -331,30 +444,23 @@ function initSearch() {
         searchHolder.appendChild(resultsContainer);
     }
 
-    function getCategoryIcon(category) {
-        if (!category) return `${product.media}`;
-        
-        const lowerCat = category.toLowerCase();
-        
-        if (lowerCat.includes('phone') || lowerCat.includes('телефон')) return '📱';
-        if (lowerCat.includes('laptop') || lowerCat.includes('ноутбук')) return '💻';
-        if (lowerCat.includes('tv') || lowerCat.includes('телевизор')) return '📺';
-        if (lowerCat.includes('audio') || lowerCat.includes('наушник')) return '🎧';
-        if (lowerCat.includes('game') || lowerCat.includes('игр')) return '🎮';
-        if (lowerCat.includes('home') || lowerCat.includes('дом')) return '🏠';
-        if (lowerCat.includes('kitchen') || lowerCat.includes('кухн')) return '🍳';
-        if (lowerCat.includes('beauty') || lowerCat.includes('красот')) return '💄';
-        if (lowerCat.includes('fashion') || lowerCat.includes('одежд')) return '👕';
-        if (lowerCat.includes('sport') || lowerCat.includes('спорт')) return '⚽';
-        if (lowerCat.includes('book') || lowerCat.includes('книг')) return '📚';
-        if (lowerCat.includes('toy') || lowerCat.includes('игрушк')) return '🧸';
-        if (lowerCat.includes('auto') || lowerCat.includes('авто')) return '🚗';
-        if (lowerCat.includes('health') || lowerCat.includes('здоров')) return '💊';
-        if (lowerCat.includes('office') || lowerCat.includes('офис')) return '📎';
-        if (lowerCat.includes('garden') || lowerCat.includes('сад')) return '🌱';
-        
-        return '📦';
+    function getCategoryIcon(product) {
+    if (!product) return 'он не смог найти картинку';
+    
+    if (product.media && Array.isArray(product.media) && product.media.length > 0 && product.media[0]) {
+        return `<img src="${product.media[0]}" alt="${product.name || ''}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 10px;">`;
     }
+    
+    const category = product.category || '';
+    const lowerCat = category.toLowerCase();
+    
+    if (lowerCat.includes('laptop') || lowerCat.includes('ноутбук')) return '💻';
+    if (lowerCat.includes('tv') || lowerCat.includes('телевизор')) return '📺';
+    if (lowerCat.includes('audio') || lowerCat.includes('наушник')) return '🎧';
+    if (lowerCat.includes('game') || lowerCat.includes('игр')) return '🎮';
+    
+    return 'он не смог найти картинку';
+}
 
     function displayResults(results) {
         const resultsContainer = document.getElementById('searchResults');

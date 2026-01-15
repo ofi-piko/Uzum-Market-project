@@ -50,7 +50,7 @@ body > :not(.uzum-footer) {
 }
 
 #header_logo img {
-    height: 40px;
+    background-image: url(/Uzum/public/icons/logo/);
 }
 
 .katalog-btn {
@@ -266,13 +266,9 @@ body > :not(.uzum-footer) {
     padding-bottom: 16px;
 }
 
-.products-header h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #7000ff, #b900ff);
-    border-radius: 2px;
+
+a {
+    text-decoration: none;
+    color: #000000;
 }
+
