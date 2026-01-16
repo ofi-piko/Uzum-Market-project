@@ -3,6 +3,11 @@ import axios from "axios";
 import "../Components/script/Header.js";
 import "../Components/script/footer.js";
 import "../Components/script/swiper.js";
+import "../Components/script/loader.js";
+
+import "../Components/style/footer.css";
+import "../Components/style/swiper.css";
+import "../Components/style/loader.css";
 
 import "../styles/main.css";
 import "../styles/cart.css";
@@ -11,9 +16,6 @@ import "../styles/product.css";
 import "../styles/tovar.css";
 import "../styles/favorite.css";
 import "../styles/UserProfile.css";
-
-import "../Components/style/footer.css";
-import "../Components/style/swiper.css";
 
 import "../script/cart.js";
 import "../script/one-product.js";

@@ -1,6 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_BASE_URL || 'http://localhost:3000';
 
 document.addEventListener('DOMContentLoaded', function() {
+    showLoadingSkeleton();
     loadProduct();
 });
 
@@ -8,66 +9,146 @@ async function loadProduct() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
     
+    let productData = null;
+    let shouldShowFallback = false;
+    
     if (!productId) {
-        showProductError('Товар не найден');
-        return;
+        const cached = localStorage.getItem('selectedProduct');
+        if (cached) {
+            productData = JSON.parse(cached);
+        } else {
+            shouldShowFallback = true;
+        }
+    } else {
+        productData = await getProductById(productId);
+        if (!productData) {
+            shouldShowFallback = true;
+        }
     }
     
-    try {
-        const product = await getProductById(productId);
-        if (product) {
-            renderProduct(product);
-        } else {
-            showProductError('Товар не найден');
-        }
-    } catch (error) {
-        console.error('Ошибка загрузки товара:', error);
-        showProductError('Ошибка загрузки товара');
+    if (shouldShowFallback) {
+        productData = await getFallbackProduct();
+    }
+    
+    if (productData) {
+        setTimeout(() => renderProduct(productData), 300);
     }
 }
 
 async function getProductById(productId) {
-    const cachedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-    
-    if (cachedProduct && cachedProduct._index === productId) {
-        return cachedProduct;
+    const cachedProduct = localStorage.getItem('selectedProduct');
+    if (cachedProduct) {
+        const parsed = JSON.parse(cachedProduct);
+        if (parsed._index === productId || parsed.id === productId) {
+            return parsed;
+        }
     }
     
     try {
         const res = await fetch(`${BACKEND_URL}/api/v1/main/products`);
-        const products = await res.json();
-        const allProducts = Array.isArray(products) ? products : products.products || [];
+        const data = await res.json();
+        const products = Array.isArray(data) ? data : data.products || [];
         
-        const product = allProducts.find(p => 
+        const product = products.find(p => 
             p.id === productId || 
             p._index === productId || 
-            (p.id && p.id.toString() === productId)
+            (p.id && p.id.toString() === productId) ||
+            (p._id && p._id.toString() === productId)
         );
         
         if (product) {
-            const productWithIndex = {
+            const enhancedProduct = {
                 ...product,
                 _index: productId,
-                _selectedAt: new Date().toISOString()
+                _cachedAt: new Date().toISOString()
             };
-            localStorage.setItem('selectedProduct', JSON.stringify(productWithIndex));
-            return productWithIndex;
+            localStorage.setItem('selectedProduct', JSON.stringify(enhancedProduct));
+            return enhancedProduct;
         }
+        
+        return null;
     } catch (error) {
-        console.error('Ошибка загрузки с сервера:', error);
+        return null;
     }
-    
-    return null;
 }
 
-function showProductError(message) {
+async function getFallbackProduct() {
+    const cached = localStorage.getItem('selectedProduct');
+    if (cached) {
+        return JSON.parse(cached);
+    }
+    
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/v1/main/products`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const products = Array.isArray(data) ? data : data.products || [];
+        
+        if (products.length > 0) {
+            const fallbackProduct = {
+                ...products[0],
+                _index: 'fallback_' + Date.now(),
+                _isFallback: true
+            };
+            localStorage.setItem('selectedProduct', JSON.stringify(fallbackProduct));
+            return fallbackProduct;
+        }
+    } catch (error) {}
+    
+    return createDummyProduct();
+}
+
+function createDummyProduct() {
+    return {
+        title: "Пример товара",
+        description: "Описание товара будет загружено позже",
+        price: 999999,
+        oldPrice: 1299999,
+        type: "other",
+        brand: "Бренд",
+        color: "Черный",
+        size: "Стандартный",
+        material: "Материал",
+        weight: 1,
+        country: "Страна производства",
+        inStock: true,
+        rating: 4.5,
+        media: [],
+        _index: 'dummy_' + Date.now(),
+        _isDummy: true
+    };
+}
+
+function showLoadingSkeleton() {
     const container = document.getElementById('oneProduct');
     container.innerHTML = `
-        <div class="product-error">
-            <h3>${message}</h3>
-            <button onclick="window.location.href='index.html'" class="back-to-home-btn">
-                На главную
-            </button>
+        <div class="one-product-container">
+            <div class="product-back-section">
+                <div class="skeleton skeleton-btn" style="width: 150px; height: 40px;"></div>
+            </div>
+            
+            <div class="one-product-main">
+                <div class="one-product-images">
+                    <div class="skeleton skeleton-image" style="width: 100%; height: 400px;"></div>
+                </div>
+                
+                <div class="one-product-info">
+                    <div class="skeleton skeleton-text" style="width: 120px; height: 24px; margin-bottom: 20px;"></div>
+                    <div class="skeleton skeleton-title" style="width: 80%; height: 32px; margin-bottom: 15px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 150px; height: 24px; margin-bottom: 20px;"></div>
+                    <div class="skeleton skeleton-price" style="width: 200px; height: 36px; margin-bottom: 25px;"></div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div class="skeleton skeleton-text" style="width: 100px; height: 24px; margin-bottom: 10px;"></div>
+                        <div class="skeleton skeleton-text" style="width: 100%; height: 60px;"></div>
+                    </div>
+                    
+                    <div class="one-product-actions">
+                        <div class="skeleton skeleton-btn" style="width: 200px; height: 50px;"></div>
+                        <div class="skeleton skeleton-btn" style="width: 50px; height: 50px; margin-left: 10px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
 }
@@ -136,13 +217,13 @@ function renderProduct(product) {
                         ${inStock ? 'В наличии' : 'Нет в наличии'}
                     </div>
                     
-                    <h1 class="one-product-title">${escapeHtml(product.title || product.name || 'Без названия')}</h1>
+                    <h1 class="one-product-title">${escapeHtml(product.title || product.name || 'Товар')}</h1>
                     
                     ${product.rating ? `
                         <div class="one-product-rating">
                             <div class="one-product-stars">
                                 ${'★'.repeat(Math.floor(product.rating))}
-                                ${product.rating % 1 >= 0.5 ? '⭐' : '☆'}
+                                ${product.rating % 1 >= 0.5 ? '★' : '☆'}
                                 ${'☆'.repeat(4 - Math.floor(product.rating))}
                             </div>
                             <span class="one-product-rating-value">${product.rating.toFixed(1)}/5</span>
@@ -394,6 +475,38 @@ style.textContent = `
     @keyframes slideInRight {
         from { transform: translateX(100%); opacity: 0; }
         to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 4px;
+    }
+    
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    
+    .skeleton-image {
+        height: 400px;
+    }
+    
+    .skeleton-title {
+        height: 32px;
+    }
+    
+    .skeleton-price {
+        height: 36px;
+    }
+    
+    .skeleton-text {
+        height: 20px;
+    }
+    
+    .skeleton-btn {
+        height: 50px;
     }
 `;
 document.head.appendChild(style);

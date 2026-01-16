@@ -334,7 +334,10 @@ const ProductManager = (function() {
                     const product = this.pickProduct(idx);
                     
                     const cartObj = storage.get('cart');
-                    cartObj[idx] = product;
+                    cartObj[idx] = {
+                        ...product,
+                        quantity: 1  // ИСПРАВЛЕНО: устанавливаем начальное количество 1
+                    };
                     storage.set('cart', cartObj);
                     
                     this.renderMainContent();

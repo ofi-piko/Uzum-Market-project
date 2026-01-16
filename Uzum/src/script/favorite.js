@@ -192,8 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('liked')) {
         new FavoriteManager().init();
     }
-
-    if (document.getElementById('korzina')) {
-        new CartManager().init();
-    }
 });

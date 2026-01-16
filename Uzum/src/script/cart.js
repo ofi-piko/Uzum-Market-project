@@ -43,6 +43,12 @@ class CartManager {
         return this.getTotalNumber(data).toLocaleString('ru-RU') + ' сум';
     }
 
+    getOriginalPrice(price) {
+        // Добавляем 3% к цене для показа "оригинальной" цены
+        const original = Math.round(Number(price) * 1.03);
+        return original.toLocaleString('ru-RU') + ' сум';
+    }
+
 
     renderCart(container) {
         const cartData = this.getCartData();
@@ -65,26 +71,44 @@ class CartManager {
 
         container.innerHTML = `
             <div class="korzina-container">
-                <div class="products">
-                    ${cartItems.map(item => this.renderCartItem(item)).join('')}
+                <div class="products-column">
+                    <div class="delivery-header">
+                        <h3 class="delivery-title">Доставка Uzum Market</h3>
+                        <p class="delivery-subtitle">Доставим завтра</p>
+                    </div>
+                    
+                    <div class="product-list">
+                        ${cartItems.map(item => this.renderCartItem(item)).join('')}
+                    </div>
                 </div>
-                <div class="final-product">
-                    <div class="final-product__price">
-                        ${this.getTotalFormatted(cartData)}
+                
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h3 class="summary-title">Итого</h3>
                     </div>
-                    <div class="final-product__currency">Итого</div>
-                    <div class="final-product__info">
-                        <b>Товары:</b> ${cartItems.length}
+                    <div class="summary-content">
+                        <div class="summary-row">
+                            <span class="summary-label">${cartItems.length} товара</span>
+                            <span class="summary-value">${this.getTotalFormatted(cartData)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Доставка</span>
+                            <span class="summary-value" style="color: #00a650;">Бесплатно</span>
+                        </div>
+                        <div class="summary-total summary-row">
+                            <span class="summary-label">К оплате</span>
+                            <span class="summary-value">${this.getTotalFormatted(cartData)}</span>
+                        </div>
+                        <button class="summary-btn">
+                            Оформить заказ
+                        </button>
                     </div>
-                    <button class="final-product__btn">
-                        Оформить заказ
-                    </button>
                 </div>
             </div>
         `;
 
         document
-            .querySelector('.final-product__btn')
+            .querySelector('.summary-btn')
             .addEventListener('click', () => this.checkoutOrder());
 
         this.initCounters();
@@ -93,22 +117,38 @@ class CartManager {
 
     renderCartItem(item) {
         const imageUrl = item.media?.[0] || item.image || '';
+        const shortTitle = item.title.length > 60 ? 
+            item.title.substring(0, 60) + '...' : 
+            item.title;
 
         return `
-            <div class="product" data-id="${item.productId}">
-                <img src="${imageUrl}" alt="${item.title}">
-                <h2>${item.title}</h2>
-                <p>${Number(item.price).toLocaleString('ru-RU')} сум</p>
-
-                <div class="counter">
-                    <button class="decrease">−</button>
-                    <input class="count" type="number" min="1" value="${item.quantity}">
-                    <button class="increase">+</button>
+            <div class="product-card" data-id="${item.productId}">
+                <div class="product-header">
+                    <span class="product-badge"><img src="${imageUrl}" alt="${item.title}" class="product-image"></span>
+                    <div class="product-title-wrapper">
+                        <h3 class="product-title">${shortTitle}</h3>
+                        <p class="product-seller">Продавец: OPTMEGA_mobile.1</p>
+                        <p class="product-color">Цвет: Черный</p>
+                    </div>
                 </div>
-
-                <button class="delete-btn" data-id="${item.productId}">
-                    Удалить
-                </button>
+                
+                <div class="product-details">
+                    <div class="price-section">
+                        <span class="current-price">${Number(item.price).toLocaleString('ru-RU')} сум</span>
+                        <span class="original-price">без карты Uzum ${this.getOriginalPrice(item.price)}</span>
+                    </div>
+                    
+                    <div class="actions-section">
+                        <div class="counter">
+                            <button class="decrease">−</button>
+                            <input class="count" type="number" min="1" value="${item.quantity}">
+                            <button class="increase">+</button>
+                        </div>
+                        <button class="delete-btn" data-id="${item.productId}">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -133,7 +173,7 @@ class CartManager {
     }
 
     updateQuantity(input) {
-        const productId = input.closest('.product').dataset.id;
+        const productId = input.closest('.product-card').dataset.id;
         const cart = this.getCartData();
 
         if (!cart[productId]) return;
@@ -141,8 +181,15 @@ class CartManager {
         cart[productId].quantity = Math.max(1, Number(input.value));
         this.saveCartData(cart);
 
-        document.querySelector('.final-product__price').textContent =
-            this.getTotalFormatted(cart);
+        // Обновляем итоговую сумму
+        const summaryValue = document.querySelector('.summary-row:first-child .summary-value');
+        const totalValue = document.querySelector('.summary-total .summary-value');
+        
+        if (summaryValue && totalValue) {
+            const total = this.getTotalFormatted(cart);
+            summaryValue.textContent = total;
+            totalValue.textContent = total;
+        }
     }
 
 
@@ -181,7 +228,7 @@ class CartManager {
             <div class="not-full-cart">
                 <img src="./public/icons/img/shopocat1.png"><br>
                 <h2>Заказ оформлен!</h2><br>
-                <h4>Номер: #${order.id.toString().slice(-6)}</h4><br>
+                <h4>Номер заказа: #${order.id.toString().slice(-6)}</h4><br>
                 <button><a href="index.html">на главную</a></button>
             </div>
         `;
