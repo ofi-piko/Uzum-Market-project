@@ -15,8 +15,8 @@
 
 ### Главный пример как создовался поиск (пример UI)
 ![E-commerce Homepage UI](https://pin.it/4eXNhwZO4)
-![E-create uzum](https://vgif.ru/gifs/155/vgif-ru-25755.gif)
-![E-create uzum](https://pin.it/6YbNqxI9x)
+![E-create-login-json](https://vgif.ru/gifs/155/vgif-ru-25755.gif)
+![E-reaction in error](https://pin.it/6YbNqxI9x)
 
 ## 📦 Стек технологий
 
