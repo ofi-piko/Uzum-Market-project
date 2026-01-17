@@ -15,7 +15,7 @@
 
 ### пример UI
 ![E-commerce Homepage UI](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzQ4dDZpNmVlYmVhcjB5ZnUxOWV6ZHZ5cWt2dmFzbWV1ZjF5bGVuaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xonOzxf2M8hNu/giphy.gif)
-![E-create-login-json]([https://pin.it/7MwQ3I8qI](https://i.pinimg.com/736x/72/4e/26/724e265892632dd8459cdb3d219f8f38.jpg)
+![E-create-login-json](https://i.pinimg.com/736x/72/4e/26/724e265892632dd8459cdb3d219f8f38.jpg)
 ![E-reaction-in-error]
 ## 📦 Стек технологий
 
