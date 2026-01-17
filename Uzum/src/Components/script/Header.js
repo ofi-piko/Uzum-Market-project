@@ -47,19 +47,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = searchHolder.querySelector('input[type="search"]');
   
   const keywordHints = {
-    'телефон': 'Смартфоны и телефоны',
-    'phone': 'Смартфоны и телефоны',
-    'смартфон': 'Смартфоны и телефоны',
-    'мобильный': 'Смартфоны и телефоны',
-    'ноутбук': 'Ноутбуки и компьютеры',
-    'laptop': 'Ноутбуки и компьютеры',
-    'компьютер': 'Ноутбуки и компьютеры',
-    'одежда': 'Одежда и аксессуары',
-    'обувь': 'Обувь',
-    'электроника': 'Электроника',
-    'аксессуар': 'Аксессуары',
-    'книга': 'Книги',
-    'игра': 'Игры и софт'
+    'мебель': 'Furniture',
+    'аудотехника': 'Audio equipment',
+    'Кухонная техника': 'Kitchen appliances',
+    'ноутбук': 'Laptops',
+    'компьютер': 'Computers ',
+    'электроника': 'Electronics',
   };
 
   searchInput.addEventListener('input', function (e) {
@@ -81,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (foundHint) {
       hintElement.style.display = 'block';
-      hintElement.textContent = `🔍 ${foundHint}`;
+      hintElement.textContent = `${foundHint}`;
     } else {
       hintElement.style.display = 'none';
     }
@@ -243,7 +236,7 @@ const AuthApp = {
                     <button type="submit" style="
                         width: 100%;
                         padding: 14px;
-                        background: #4CAF50;
+                        background: #271e82;
                         color: white;
                         border: none;
                         border-radius: 6px;
@@ -420,4 +413,3 @@ function updateLogo() {
     logo.title = 'Версия для ПК';
   }
 }
-

@@ -14,9 +14,9 @@
 ## 📸 Скриншоты UI (примерные заглушки)
 
 ### Главный пример как создовался поиск (пример UI)
-![E-commerce Homepage UI](https://i.pinimg.com/originals/ad/a4/ad/ada4ad13b2099bbd897f5445ac28c150.gif)
-
----
+![E-commerce Homepage UI](https://pin.it/4eXNhwZO4)
+![E-create uzum](https://vgif.ru/gifs/155/vgif-ru-25755.gif)
+![E-create uzum](https://pin.it/6YbNqxI9x)
 
 ## 📦 Стек технологий
 

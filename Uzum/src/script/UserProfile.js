@@ -5,7 +5,6 @@ const gender = userData.gender || 'unknown';
 const firstName = userData.firstName || 'Пользователь';
 const lastName = userData.lastName || '';
 const phone = userData.phone || 'Не указан';
-const email = userData.email || 'Не указан';
 
 let avatarImage = '';
 switch(gender) {
@@ -31,10 +30,6 @@ userMenu.innerHTML = `
                 <div class="data-item">
                     <span class="label">Телефон:</span>
                     <span class="value">${phone}</span>
-                </div>
-                <div class="data-item">
-                    <span class="label">Email:</span>
-                    <span class="value">${email}</span>
                 </div>
                 <div class="data-item">
                     <span class="label">Пол:</span>
@@ -92,19 +87,15 @@ userMenu.innerHTML = `
                     <form class="profile-form">
                         <div class="form-group">
                             <label for="profile-first-name">Имя</label>
-                            <input type="text" id="profile-first-name" value="${firstName}">
+                            <input type="text" id="profile-first-name" value="${firstName}" required>
                         </div>
                         <div class="form-group">
                             <label for="profile-last-name">Фамилия</label>
-                            <input type="text" id="profile-last-name" value="${lastName}">
+                            <input type="text" id="profile-last-name" value="${lastName}" required>
                         </div>
                         <div class="form-group">
                             <label for="profile-phone">Телефон</label>
-                            <input type="tel" id="profile-phone" value="${phone}">
-                        </div>
-                        <div class="form-group">
-                            <label for="profile-email">Email</label>
-                            <input type="email" id="profile-email" value="${email}">
+                            <input type="tel" id="profile-phone" value="${phone}" required>
                         </div>
                         <div class="form-group">
                             <label>Пол</label>
@@ -184,34 +175,22 @@ function setupProfileForm() {
                 firstName: document.getElementById('profile-first-name').value.trim(),
                 lastName: document.getElementById('profile-last-name').value.trim(),
                 phone: document.getElementById('profile-phone').value.trim(),
-                email: document.getElementById('profile-email').value.trim(),
                 gender: document.querySelector('input[name="gender"]:checked').value
             };
             
             if (!updatedUser.firstName || !updatedUser.lastName || !updatedUser.phone) {
-                alert('Пожалуйста, заполните : Имя, Фамилия и Телефон');
                 return;
             }
             
             const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/;
             if (!phoneRegex.test(updatedUser.phone)) {
-                alert('Введите свой номер фейк номер');
                 return;
-            }
-            
-            if (updatedUser.email && updatedUser.email !== 'Не указан') {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(updatedUser.email)) {
-                    alert('Введии свой а не их гпт');
-                    return;
-                }
             }
         
             localStorage.setItem('user', JSON.stringify(updatedUser));
             
             updateUserDisplay(updatedUser);
             
-            alert('мини обновка для авы');
         });
     }
 }
@@ -223,10 +202,6 @@ function updateUserDisplay(user) {
             <div class="data-item">
                 <span class="label">Телефон:</span>
                 <span class="value">${user.phone}</span>
-            </div>
-            <div class="data-item">
-                <span class="label">Email:</span>
-                <span class="value">${user.email}</span>
             </div>
             <div class="data-item">
                 <span class="label">Пол:</span>
@@ -255,7 +230,6 @@ function updateUserDisplay(user) {
         avatarImg.src = newAvatar;
     }
 }
-
 
 function initUserMenu() {
     setupTabSwitching();

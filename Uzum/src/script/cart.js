@@ -44,8 +44,7 @@ class CartManager {
     }
 
     getOriginalPrice(price) {
-        // Добавляем 3% к цене для показа "оригинальной" цены
-        const original = Math.round(Number(price) * 1.03);
+        const original = Math.round(Number(price) * 1.50);
         return original.toLocaleString('ru-RU') + ' сум';
     }
 
@@ -181,7 +180,6 @@ class CartManager {
         cart[productId].quantity = Math.max(1, Number(input.value));
         this.saveCartData(cart);
 
-        // Обновляем итоговую сумму
         const summaryValue = document.querySelector('.summary-row:first-child .summary-value');
         const totalValue = document.querySelector('.summary-total .summary-value');
         
@@ -229,7 +227,10 @@ class CartManager {
                 <img src="./public/icons/img/shopocat1.png"><br>
                 <h2>Заказ оформлен!</h2><br>
                 <h4>Номер заказа: #${order.id.toString().slice(-6)}</h4><br>
-                <button><a href="index.html">на главную</a></button>
+                <form action="index.html">
+                    <button type="submit" style="color: #fff;">На главную</button>
+                </form>
+
             </div>
         `;
     }

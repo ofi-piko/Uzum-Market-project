@@ -113,12 +113,12 @@ function getCategoryIcon(product) {
     const category = product.category || '';
     const lowerCat = category.toLowerCase();
     
-    if (lowerCat.includes('laptop') || lowerCat.includes('ноутбук')) return '💻';
-    if (lowerCat.includes('tv') || lowerCat.includes('телевизор')) return '📺';
-    if (lowerCat.includes('audio') || lowerCat.includes('наушник')) return '🎧';
-    if (lowerCat.includes('game') || lowerCat.includes('игр')) return '🎮';
+    if (lowerCat.includes('laptop') || lowerCat.includes('ноутбук')) return 'laptop';
+    if (lowerCat.includes('tv') || lowerCat.includes('телевизор')) return 'tv';
+    if (lowerCat.includes('audio') || lowerCat.includes('наушник')) return 'headphone';
+    if (lowerCat.includes('game') || lowerCat.includes('игр')) return 'game';
     
-    return '📦';
+    return '';
 }
 
 function displayResults(results) {

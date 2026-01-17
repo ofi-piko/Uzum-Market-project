@@ -101,7 +101,7 @@ async function getFallbackProduct() {
 function createDummyProduct() {
     return {
         title: "Пример товара",
-        description: "Описание товара будет загружено позже",
+        description: "Описание товара",
         price: 999999,
         oldPrice: 1299999,
         type: "other",
