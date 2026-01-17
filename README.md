@@ -16,7 +16,7 @@
 ### Главный пример как создовался поиск (пример UI)
 ![E-commerce Homepage UI](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzQ4dDZpNmVlYmVhcjB5ZnUxOWV6ZHZ5cWt2dmFzbWV1ZjF5bGVuaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xonOzxf2M8hNu/giphy.gif)
 ![E-create-login-json](https://vgif.ru/gifs/155/vgif-ru-25755.gif)
-![E-reaction in error](https://tenor.com/bU5jp.gif)
+![E-reaction in error]([https://tenor.com/bU5jp.gif](https://tenor.com/ru/view/shto-gif-25959105))
 
 ## 📦 Стек технологий
 
