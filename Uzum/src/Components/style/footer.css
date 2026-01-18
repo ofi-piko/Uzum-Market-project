@@ -1,1 +1,5 @@
 /*он тоже умер*/
+
+li > a:hover {
+    color: wheat;
+}

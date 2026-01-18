@@ -1,4 +1,3 @@
-
 class Swiper {
   constructor(containerSelector) {
     this.container = document.querySelector(containerSelector);

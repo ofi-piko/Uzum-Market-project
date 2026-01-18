@@ -16,6 +16,7 @@ class CartManager {
 
     saveCartData(cart) {
         localStorage.setItem(this.cartKey, JSON.stringify(cart));
+        
     }
 
     getAllOrders() {
@@ -66,6 +67,7 @@ class CartManager {
         const cartItems = Object.entries(cartData).map(([productId, item]) => ({
             productId,
             ...item
+            
         }));
 
         container.innerHTML = `
@@ -73,7 +75,7 @@ class CartManager {
                 <div class="products-column">
                     <div class="delivery-header">
                         <h3 class="delivery-title">Доставка Uzum Market</h3>
-                        <p class="delivery-subtitle">Доставим завтра</p>
+                        <p class="delivery-subtitle">Доставим никогда</p>
                     </div>
                     
                     <div class="product-list">
@@ -126,8 +128,8 @@ class CartManager {
                     <span class="product-badge"><img src="${imageUrl}" alt="${item.title}" class="product-image"></span>
                     <div class="product-title-wrapper">
                         <h3 class="product-title">${shortTitle}</h3>
-                        <p class="product-seller">Продавец: OPTMEGA_mobile.1</p>
-                        <p class="product-color">Цвет: Черный</p>
+                        <p class="product-seller">Продавец: Ofi-piko</p>
+                        <p class="product-color">Цвет: ${item.colors[0]}</p>
                     </div>
                 </div>
                 
@@ -214,6 +216,7 @@ class CartManager {
             items: cart,
             total: this.getTotalNumber(cart),
             status: 'новый'
+            
         };
 
         const orders = this.getAllOrders();

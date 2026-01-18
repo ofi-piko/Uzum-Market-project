@@ -54,7 +54,7 @@ class FavoriteManager {
         return `
             <div class="product-card">
                 <div class="product-image-container">
-                    ${item.image ? `<img src="${item.image}" class="product-image">` : `<div class="no-image">Нет изображения</div>`}
+                    ${item.media ? `<img src="${item.media[0]}" class="product-image">` : `<div class="no-image">Нет изображения</div>`}
                     <button
                         class="product-wishlist-btn active"
                         data-index="${item.productId}">
