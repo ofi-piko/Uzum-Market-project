@@ -1,4 +1,4 @@
-const loader = document.getElementById("loader");
+/* const loader = document.getElementById("loader");
 
 loader.innerHTML = `
 <div class="loader-overlay">
@@ -108,3 +108,4 @@ setTimeout(() => {
   loader.style.opacity = "0";
   setTimeout(() => loader.remove(), 500);
 }, 3000);
+ */

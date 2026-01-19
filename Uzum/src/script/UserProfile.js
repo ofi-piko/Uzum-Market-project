@@ -7,7 +7,7 @@ const lastName = userData.lastName || '';
 const phone = userData.phone || 'Не указан';
 
 let avatarImage = '';
-switch(gender) {
+switch (gender) {
     case 'male':
         avatarImage = './public/icons/logo/logo/man.jpg';
         break;
@@ -33,27 +33,26 @@ userMenu.innerHTML = `
                 </div>
                 <div class="data-item">
                     <span class="label">Пол:</span>
-                    <span class="value">${
-                        gender === 'male' ? 'Мужской' : 
-                        gender === 'female' ? 'Женский' : 
-                        'Не указан'
-                    }</span>
+                    <span class="value">${gender === 'male' ? 'Мужской' :
+        gender === 'female' ? 'Женский' :
+            'Не указан'
+    }</span>
                 </div>
             </div>
         </div>
         
         <nav class="menu">
+        <button class="menu-item" data-tab="profile">
+                <span>Профиль</span>
+            </button>
             <button class="menu-item active" data-tab="orders">
                 <span>Мои заказы</span>
             </button>
+            <button class="menu-item" data-tab="promocodes">
+            <span>Промокоды</span>
+            </button>
             <button class="menu-item" data-tab="reviews">
                 <span>Отзывы</span>
-            </button>
-            <button class="menu-item" data-tab="profile">
-                <span>Профиль</span>
-            </button>
-            <button class="menu-item" data-tab="promocodes">
-                <span>Промокоды</span>
             </button>
             <button class="menu-item" data-tab="logout" id="logout-btn-menu">
                 <span>Выйти</span>
@@ -138,23 +137,82 @@ userMenu.innerHTML = `
 
 function setupTabSwitching() {
     const menuButtons = document.querySelectorAll('.menu-item');
-    
+
     menuButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const tabId = this.dataset.tab;
-            
+
             if (tabId === 'logout') {
-                if (confirm('Вы уверены, что хотите выйти?')) {
-                    localStorage.removeItem('user');
-                    window.location.href = 'index.html';
+                const ordersList = document.querySelector('.orders-list');
+                if (ordersList) {
+                    ordersList.innerHTML = `
+            <div class="logout-menu">
+                <div class="logout-warning">
+                    <div class="warning-icon">Опастная Зона!</div>
+                    <p>Вы уверены, что хотите удалить/выйти из профиля?</p>
+                    <p class="warning-subtext">После удаления/выхода потребуется повторная регистрация или же вход</p>
+                    <div class="logout-buttons">
+                        <button class="logout-confirm-btn" id="logout-confirm-btn">Да, выйти</button>
+                        <button class="logout-cancel-btn" id="logout-cancel-btn">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                    document.getElementById('logout-confirm-btn').addEventListener('click', function () {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('allOrders');
+                        window.location.href = 'index.html';
+                    });
+
+                    document.getElementById('logout-cancel-btn').addEventListener('click', function () {
+                        const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+                        const ordersList = document.querySelector('.orders-list');
+
+                        if (!Array.isArray(allOrders) || allOrders.length === 0) {
+                            ordersList.innerHTML = '<p>У вас пока нет заказов</p>';
+                        } else {
+                            ordersList.innerHTML = '';
+                            allOrders.forEach(order => {
+                                const orderCard = document.createElement('div');
+                                orderCard.className = 'order-card';
+                                ordersList.appendChild(orderCard);
+                            });
+                        }
+
+                        menuButtons.forEach(btn => btn.classList.remove('active'));
+                        document.querySelector('[data-tab="orders"]').classList.add('active');
+
+                        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                        document.getElementById('orders').classList.add('active');
+
+                        const ordersTab = document.getElementById('orders');
+                        const ordersTitle = ordersTab.querySelector('h1');
+                        if (ordersTitle) {
+                            ordersTitle.textContent = 'Мои заказы';
+                        }
+                    });
                 }
+
+                const ordersTab = document.getElementById('orders');
+                const ordersTitle = ordersTab.querySelector('h1');
+                if (ordersTitle) {
+                    ordersTitle.textContent = 'Выход из аккаунта';
+                }
+
+                menuButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                ordersTab.classList.add('active');
+
                 return;
             }
-            
+
             menuButtons.forEach(btn => btn.classList.remove('active'));
-            
+
             this.classList.add('active');
-            
+
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -165,11 +223,11 @@ function setupTabSwitching() {
 
 function setupProfileForm() {
     const profileForm = document.querySelector('.profile-form');
-    
+
     if (profileForm) {
-        profileForm.addEventListener('submit', function(e) {
+        profileForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const updatedUser = {
                 ...userData,
                 firstName: document.getElementById('profile-first-name').value.trim(),
@@ -177,20 +235,20 @@ function setupProfileForm() {
                 phone: document.getElementById('profile-phone').value.trim(),
                 gender: document.querySelector('input[name="gender"]:checked').value
             };
-            
+
             if (!updatedUser.firstName || !updatedUser.lastName || !updatedUser.phone) {
                 return;
             }
-            
+
             const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/;
             if (!phoneRegex.test(updatedUser.phone)) {
                 return;
             }
-        
+
             localStorage.setItem('user', JSON.stringify(updatedUser));
-            
+
             updateUserDisplay(updatedUser);
-            
+
         });
     }
 }
@@ -205,24 +263,23 @@ function updateUserDisplay(user) {
             </div>
             <div class="data-item">
                 <span class="label">Пол:</span>
-                <span class="value">${
-                    user.gender === 'male' ? 'Мужской' : 
-                    user.gender === 'female' ? 'Женский' : 
+                <span class="value">${user.gender === 'male' ? 'Мужской' :
+                user.gender === 'female' ? 'Женский' :
                     'Не указан'
-                }</span>
+            }</span>
             </div>
         `;
     }
-    
+
     const userNameElement = document.querySelector('.user-name');
     if (userNameElement) {
         userNameElement.textContent = `${user.firstName} ${user.lastName}`;
     }
-    
+
     const avatarImg = document.querySelector('.avatar img');
     if (avatarImg) {
         let newAvatar = '';
-        switch(user.gender) {
+        switch (user.gender) {
             case 'male': newAvatar = './public/icons/logo/logo/man.jpg'; break;
             case 'female': newAvatar = './public/icons/logo/logo/women.jpg'; break;
             default: newAvatar = './public/icons/logo/logo/none.jpg';

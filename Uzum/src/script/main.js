@@ -4,6 +4,7 @@ import "../Components/script/Header.js";
 import "../Components/script/footer.js";
 import "../Components/script/swiper.js";
 import "../Components/script/loader.js";
+import "../Components/script/login.js";
 
 import "../Components/style/footer.css";
 import "../Components/style/swiper.css";
