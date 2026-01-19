@@ -108,8 +108,6 @@ function updateLogo() {
   }
 }
 
-// Обновляем логотип при загрузке
 document.addEventListener('DOMContentLoaded', updateLogo);
 
-// Обновляем логотип при изменении размера окна
 window.addEventListener('resize', updateLogo);
